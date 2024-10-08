@@ -1,0 +1,90 @@
+﻿@page
+@model APIPix.Pages.IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="ml-3">
+    <h3><b>Olá Matheus</b></h3>
+    <h4>Este é o Painel do Cliente.</h4>
+</div>
+
+<!-- Ações Rápidas - Movidas para o topo -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-end mb-4 mt-4">
+            <div>
+                <h5>Ações Rápidas</h5>
+                <a href="@Url.Page("CriarTransacao")" class="btn btn-primary">Criar Nova Transação</a>
+                <a href="@Url.Page("/Relatorios")" class="btn btn-secondary">Ver Relatórios</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Resumo de Estatísticas -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total de Transações</div>
+                <div class="card-body">
+                    <h5 class="card-title">R$ @Model.TotalTransacoes.ToString("N2")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Saldo Atual</div>
+                <div class="card-body">
+                    <h5 class="card-title">R$ @Model.SaldoAtual.ToString("N2")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Clientes Cadastrados</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.ClientesCadastrados</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Section -->
+<div id="dashboard" class="container mt-4">
+    <canvas id="myChart" width="400" height="200"></canvas>
+</div>
+
+@section Scripts {
+    <script>
+        // Exemplo de gráfico utilizando Chart.js
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', // Você pode mudar o tipo de gráfico para 'line', 'pie', etc.
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+                datasets: [{
+                    label: 'Vendas',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Para ocupar 100% da largura
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

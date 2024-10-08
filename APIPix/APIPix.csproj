@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Index - Cópia.cshtml.cs" />
+    <Compile Remove="Pages\Relatorios - Cópia.cshtml.cs" />
+    <Compile Remove="Pages\Relatorios.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Index - Cópia.cshtml" />
+    <Content Remove="Pages\Relatorios - Cópia.cshtml" />
+    <Content Remove="wwwroot\Analytics.cshtml" />
+    <Content Remove="wwwroot\Analytics.cshtml.cs" />
+  </ItemGroup>
+
+</Project>

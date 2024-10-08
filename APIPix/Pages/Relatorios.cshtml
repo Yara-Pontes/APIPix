@@ -1,0 +1,69 @@
+﻿@page "/Relatorios"
+@model APIPix.Pages.RelatoriosModel
+@{
+    ViewData["Title"] = "Histórico de Transações";
+}
+
+<div class="container mt-4">
+    <h3><b>Histórico de Transações</b></h3>
+
+    <!-- Filtro de Transações -->
+    <div class="card mt-4">
+        <div class="card-header">
+            Filtro de Transações
+        </div>
+        <div class="card-body">
+            <form method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="startDate">Data Inicial:</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="endDate">Data Final:</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="status">Status da Transação:</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="todos">Todos</option>
+                            <option value="sucesso">Sucesso</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="falha">Falha</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de Transações -->
+    <div class="mt-4">
+        <h4>Transações Recentes</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Remetente</th>
+                    <th>Destinatário</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Data</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Remetente</th>
+                    <th>Destinatário</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

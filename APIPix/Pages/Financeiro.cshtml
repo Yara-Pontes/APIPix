@@ -1,0 +1,91 @@
+﻿@page
+@model APIPix.Pages.FinanceiroModel
+@{
+    ViewData["Title"] = "Financeiro";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Títulos Financeiro e Resumo Financeiro Alinhados à Esquerda -->
+        <div class="col-md-6">
+            <h2>Financeiro</h2>
+            <h4>Resumo Financeiro</h4>
+        </div>
+
+        <!-- Ações Rápidas Alinhadas à Direita -->
+        <div class="col-md-6 text-right">
+            <div class="mb-4">
+                <a href="@Url.Page("AdicionarReceita")" class="btn btn-primary">Adicionar Receita</a>
+                <a href="@Url.Page("AdicionarDespesa")" class="btn btn-secondary">Adicionar Despesa</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumo Financeiro Cards -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Saldo Atual</div>
+                <div class="card-body">
+                    <h5 class="card-title">R$ @Model.SaldoAtual.ToString("N2")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Receitas Totais</div>
+                <div class="card-body">
+                    <h5 class="card-title">R$ @Model.ReceitasTotais.ToString("N2")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Despesas Totais</div>
+                <div class="card-body">
+                    <h5 class="card-title">R$ @Model.DespesasTotais.ToString("N2")</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráfico Financeiro -->
+    <div id="financeChart" class="mt-4">
+        <canvas id="myFinanceChart" width="400" height="200"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Exemplo de gráfico utilizando Chart.js
+        var ctx = document.getElementById('myFinanceChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line', // Tipo de gráfico
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+                datasets: [{
+                    label: 'Receitas',
+                    data: [1200, 1900, 3000, 500, 2000, 2500],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true
+                }, {
+                    label: 'Despesas',
+                    data: [800, 1200, 1500, 700, 1900, 1800],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

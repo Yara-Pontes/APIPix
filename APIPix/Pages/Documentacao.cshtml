@@ -1,0 +1,78 @@
+﻿@page
+@model APIPix.Pages.DocumentacaoModel
+@{
+    ViewData["Title"] = "Documentação da API";
+}
+
+<div class="container mt-4">
+    <h1>Documentação da API Pix</h1>
+
+    <h2>Introdução</h2>
+    <p>A API Pix permite a realização de transações financeiras de forma rápida e segura...</p>
+
+    <h2>Autenticação</h2>
+    <p>Para acessar a API, você precisa autenticar suas solicitações usando um token Bearer.</p>
+    <pre><code>
+    Authorization: Bearer {seu_token}
+    </code></pre>
+
+    <h2>Endpoints da API</h2>
+    <h3>1. Criar Transação</h3>
+    <p>Método: <strong>POST</strong></p>
+    <p>URL: <strong>/api/transacoes</strong></p>
+    <h4>Parâmetros</h4>
+    <ul>
+        <li><strong>valor</strong> (float) - O valor da transação. (obrigatório)</li>
+        <li><strong>remetente</strong> (string) - Identificação do remetente. (obrigatório)</li>
+        <li><strong>destinatario</strong> (string) - Identificação do destinatário. (obrigatório)</li>
+    </ul>
+    <h4>Exemplo de Solicitação</h4>
+    <pre><code>
+    POST /api/transacoes
+    {
+        "valor": 100.00,
+        "remetente": "12345678900",
+        "destinatario": "09876543211"
+    }
+        </code></pre>
+        <h4>Resposta</h4>
+        <pre><code>
+    HTTP/1.1 201 Created
+    {
+        "id": "abc123",
+        "status": "sucesso"
+    }
+    </code></pre>
+
+    <h2>Modelos de Dados</h2>
+    <h3>Transação</h3>
+    <ul>
+        <li><strong>id</strong> (string) - Identificador da transação.</li>
+        <li><strong>valor</strong> (float) - Valor da transação.</li>
+        <li><strong>remetente</strong> (string) - ID do remetente.</li>
+        <li><strong>destinatario</strong> (string) - ID do destinatário.</li>
+        <li><strong>status</strong> (string) - Status da transação (sucesso, falha, pendente).</li>
+    </ul>
+
+    <h2>Erros Comuns</h2>
+    <ul>
+        <li><strong>400 Bad Request</strong> - Solicitação mal formada.</li>
+        <li><strong>401 Unauthorized</strong> - Falha na autenticação.</li>
+        <li><strong>404 Not Found</strong> - Endpoint não encontrado.</li>
+        <li><strong>500 Internal Server Error</strong> - Erro no servidor.</li>
+    </ul>
+
+    <h2>FAQ</h2>
+    <ul>
+        <li><strong>Como posso resetar minha chave de API?</strong> - Para resetar sua chave de API, entre em contato com o suporte.</li>
+    </ul>
+
+    <h2>Changelog</h2>
+    <ul>
+        <li>1.0 - Lançamento inicial da API.</li>
+        <li>1.1 - Adicionadas novas funcionalidades de relatórios.</li>
+    </ul>
+
+    <h2>Contato para Suporte</h2>
+    <p>Se você tiver dúvidas ou precisar de ajuda, entre em contato pelo e-mail: suporte@seusite.com.br</p>
+</div>

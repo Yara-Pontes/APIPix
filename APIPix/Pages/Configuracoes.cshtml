@@ -1,0 +1,44 @@
+﻿@page
+@model APIPix.Pages.ConfiguracoesModel
+@{
+    ViewData["Title"] = "Configurações";
+}
+
+<div class="container mt-4">
+    <h2 class="">Configurações</h2>
+
+    <!-- Seção de Segurança -->
+    <div class="mb-4">
+        <h4 class="mt-2">Segurança</h4>
+        <form method="post">
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail de Notificação</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="novaSenha" class="form-label">Alterar Senha</label>
+                <input type="password" class="form-control" id="novaSenha" name="novaSenha" required>
+            </div>
+            <div class="mb-3">
+                <label for="autenticacaoDupla" class="form-label">Autenticação em Duas Etapas</label>
+                <select class="form-select" id="autenticacaoDupla" name="autenticacaoDupla">
+                    <option value="sim">Ativar</option>
+                    <option value="nao">Desativar</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar Configurações</button>
+        </form>
+    </div>
+
+    <!-- Seção de Limites de Transação -->
+    <div class="mb-4">
+        <h4>Limites de Transação</h4>
+        <form method="post">
+            <div class="mb-3">
+                <label for="limiteDiario" class="form-label">Limite Diário (R$)</label>
+                <input type="number" class="form-control" id="limiteDiario" name="limiteDiario" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar Limites</button>
+        </form>
+    </div>
+</div>

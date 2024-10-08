@@ -1,0 +1,40 @@
+﻿@page
+@model APIPix.Pages.AnalyticsModel
+@{
+    ViewData["Title"] = "Analytics";
+}
+
+<h2 class="ml-5 p-2">Analytics</h2>
+
+<!-- Exibindo dados fictícios -->
+<div class="container mt-4">
+    <h4>Total de Transações: 5000</h4>
+    <h4>Valor Total Movimentado: R$ </h4>
+    <h4>Total de Transações com Sucesso: </h4>
+
+    <h5>Distribuição de Transações por Faixa de Valor</h5>
+    <ul>
+        <li>0 a R$ 500: </li>
+        <li>R$ 500 a R$ 1000: </li>
+        <li>R$ 1000 a R$ 5000: </li>
+        <li>Acima de R$ 5000:</li>
+    </ul>
+
+    <h5>Erros por Endpoint</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Endpoint</th>
+                <th>Quantidade de Erros</th>
+                <th>Erro Mais Comum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Endpoint</td>
+                <td>QuantidadeErros</td>
+                <td>ErroMaisComum</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

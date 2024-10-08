@@ -1,0 +1,57 @@
+﻿@page
+@model APIPix.Pages.SuporteModel
+@{
+    ViewData["Title"] = "Suporte";
+}
+
+<div class="container mt-4">
+    <h2>Suporte</h2>
+    <p>Se você tiver alguma dúvida ou problema, sinta-se à vontade para entrar em contato conosco preenchendo o formulário abaixo.</p>
+
+    <!-- Formulário de Contato -->
+    <form method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="tipoSolicitacao" class="form-label">Tipo de Solicitação</label>
+            <select class="form-select" id="tipoSolicitacao" name="tipoSolicitacao" required>
+                <option value="duvida">Dúvida</option>
+                <option value="problema">Problema Técnico</option>
+                <option value="sugestao">Sugestão</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="anexo" class="form-label">Anexar Arquivo</label>
+            <input type="file" class="form-control" id="anexo" name="anexo">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+    </form>
+
+    <!-- FAQ -->
+    <div class="mt-5">
+        <h4>Perguntas Frequentes (FAQ)</h4>
+        <ul>
+            <li><strong>Como posso resetar minha senha?</strong> - Você pode resetar sua senha clicando em "Esqueci minha senha" na tela de login.</li>
+            <li><strong>Como posso visualizar meu histórico de transações?</strong> - O histórico de transações pode ser acessado na seção de relatórios do painel.</li>
+            <li><strong>Onde encontro a documentação da API?</strong> - A documentação da API está disponível em [link para documentação].</li>
+        </ul>
+    </div>
+
+    <!-- Informações de Contato -->
+    <div class="mt-5">
+        <h4>Informações de Contato</h4>
+        <p>Você também pode entrar em contato conosco pelo e-mail: suporte@seusite.com.br</p>
+        <p>Ou pelo telefone: (XX) XXXX-XXXX</p>
+        <p>Horário de Atendimento: Segunda a Sexta, das 9h às 18h.</p>
+    </div>
+</div>

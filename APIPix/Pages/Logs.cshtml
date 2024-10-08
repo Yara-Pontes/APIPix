@@ -1,0 +1,49 @@
+﻿@page
+@model APIPix.Pages.LogsModel
+@{
+    ViewData["Title"] = "Logs";
+}
+
+<div class="container mt-4">
+    <h2>Logs da API</h2>
+
+    <h4>Transações Recentes</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data/Hora</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Remetente</th>
+                <th>Destinatário</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>DataHora</td>
+                <td>R$ Valor</td>
+                <td>Status</td>
+                <td>Remetente</td>
+                <td>Destinatario</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Erros Recentes</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data/Hora</th>
+                <th>Código do Erro</th>
+                <th>Mensagem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>DataHora</td>
+                <td>Codigo</td>
+                <td>Mensagem</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

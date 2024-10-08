@@ -1,0 +1,198 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    .content {
+        margin-left: 0;
+        transition: margin-left 0.3s;
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        padding-top: 60px; /* Adicionado para evitar sobreposição com o botão */
+    }
+
+    .content.expanded {
+        margin-left: 250px;
+    }
+
+    .toggle-btn {
+        position: fixed; /* Alterado para fixed */
+        top: 15px;
+        left: 15px;
+        z-index: 1100; /* Aumentado para garantir que fique acima */
+    }
+
+    .footer {
+        background-color: #343a40;
+        color: #ffffff;
+        padding: 10px 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .footer .container {
+        text-align: center;
+    }
+
+    .dashboard-panel {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .dashboard-panel h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-panel p {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    #dashboard {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    #dashboard .dashboard-panel {
+        flex: 1 1 200px;
+        max-width: 300px;
+    }
+
+    #dashboard .chart-container {
+        flex: 2 1 400px;
+        min-width: 300px;
+    }
+
+    /* Filtro de gráfico */
+    .chart-filter {
+        margin-bottom: 15px;
+    }
+
+    @@media (max-width: 768px) {
+        #dashboard {
+            flex-direction: column;
+        }
+
+        #dashboard .chart-container {
+            width: 100%;
+        }
+    }
+</style>
+<div class="">
+    <div class="ml-3">
+        <h3><b>Olá Matheus</b></h3>
+        <h4>Este é o Painel do Cliente.</h4>
+    </div>
+    <main role="main" class="content" id="content">
+        <!-- Dashboard Section -->
+        <div id="dashboard">
+            <div class="dashboard-panel">
+                <h3>Total Transações Pix no Mês</h3>
+                <p id="totalPix">R$ 12.500,00</p>
+            </div>
+            <div class="chart-container">
+                <div class="chart-filter">
+                    <button class="btn btn-sm btn-secondary" id="monthlyView">Mês</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="weeklyView">Semana</button>
+                </div>
+                <canvas id="pixChart"></canvas>
+            </div>
+        </div>
+        <!-- RenderBody for other pages -->
+        @@RenderBody()
+    </main>
+</div>
+
+<script>
+    // Dados de exemplo
+    const monthlyData = [10000, 12500, 9000, 14000, 12000, 13000, 11000, 15000, 16000, 17000, 18000, 19000];
+    const weeklyData = [3000, 4000, 3500, 2000];
+
+    // Chart.js setup para Pix transactions
+    const ctx = document.getElementById('pixChart').getContext('2d');
+    let currentView = 'monthly';
+
+    const pixChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: getLabels(currentView),
+            datasets: [{
+                label: 'Valor das Transações (R$)',
+                data: getData(currentView),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Funções para alternar entre visualizações
+    function getLabels(view) {
+        if (view === 'monthly') {
+            return ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+        } else if (view === 'weekly') {
+            return ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+        }
+    }
+
+    function getData(view) {
+        if (view === 'monthly') {
+            return monthlyData;
+        } else if (view === 'weekly') {
+            return weeklyData;
+        }
+    }
+
+    // Função para atualizar o gráfico
+    function updateChart(view) {
+        pixChart.data.labels = getLabels(view);
+        pixChart.data.datasets[0].data = getData(view);
+        pixChart.update();
+    }
+
+    // Manipuladores de eventos para os botões de filtro
+    document.getElementById('monthlyView').addEventListener('click', function() {
+        if (currentView !== 'monthly') {
+            currentView = 'monthly';
+            updateChart(currentView);
+            this.classList.remove('btn-outline-secondary');
+            this.classList.add('btn-secondary');
+            document.getElementById('weeklyView').classList.remove('btn-secondary');
+            document.getElementById('weeklyView').classList.add('btn-outline-secondary');
+        }
+    });
+
+    document.getElementById('weeklyView').addEventListener('click', function() {
+        if (currentView !== 'weekly') {
+            currentView = 'weekly';
+            updateChart(currentView);
+            this.classList.remove('btn-outline-secondary');
+            this.classList.add('btn-secondary');
+            document.getElementById('monthlyView').classList.remove('btn-secondary');
+            document.getElementById('monthlyView').classList.add('btn-outline-secondary');
+        }
+    });
+
+    // Inicializa com a visualização mensal
+    updateChart('monthly');
+</script>
