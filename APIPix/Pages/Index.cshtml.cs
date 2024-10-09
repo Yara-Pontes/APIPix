@@ -1,51 +1,52 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace APIPix.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        [BindProperty]
+        public string Username { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        [BindProperty]
+        public string Password { get; set; }
+
+        public string ErrorMessage { get; set; }
+
+        public IActionResult OnPost()
         {
-            _logger = logger;
-
-            // Dados fictícios para o painel
-            TotalTransacoes = 1500.75m;
-            SaldoAtual = 500.00m;
-            ClientesCadastrados = 120;
-            //TransacoesRecentes = ObterTransacoesRecentes();
-        }
-
-        // Propriedades para o painel
-        public decimal TotalTransacoes { get; set; }
-        public decimal SaldoAtual { get; set; }
-        public int ClientesCadastrados { get; set; }
-        public List<Transacao> TransacoesRecentes { get; set; }
-
-        /*private List<Transacao> ObterTransacoesRecentes()
-        {
-            // Exemplo de dados de transações recentes
-            return new List<Transacao>
+            // Lógica de autenticação simulada
+            if (ModelState.IsValid)
             {
-                new Transacao { Data = DateTime.Now.AddDays(-1), Valor = 100.00m, Status = "Completa", Remetente = "Cliente A", Destinatario = "Cliente B" },
-                new Transacao { Data = DateTime.Now.AddDays(-2), Valor = 200.50m, Status = "Pendente", Remetente = "Cliente C", Destinatario = "Cliente D" },
-                new Transacao { Data = DateTime.Now.AddDays(-3), Valor = 150.00m, Status = "Completa", Remetente = "Cliente E", Destinatario = "Cliente F" },
-                new Transacao { Data = DateTime.Now.AddDays(-4), Valor = 300.00m, Status = "Cancelada", Remetente = "Cliente G", Destinatario = "Cliente H" },
-                new Transacao { Data = DateTime.Now.AddDays(-5), Valor = 250.00m, Status = "Completa", Remetente = "Cliente I", Destinatario = "Cliente J" }
-            };
-        }*/
-    }
+                if (Username == "admin" && Password == "12345")
+                {
+                    // Definir os dados do usuário no cookie
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, Username)
+                    };
 
-    public class Transacao
-    {
-        public DateTime Data { get; set; }
-        public decimal Valor { get; set; }
-        public string Status { get; set; }
-        public string Remetente { get; set; }
-        public string Destinatario { get; set; }
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    // Fazer login do usuário
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+
+                    // Redireciona para o dashboard após login bem-sucedido
+                    return RedirectToPage("/Dashboard");
+                }
+                else
+                {
+                    ErrorMessage = "Usuário ou senha inválidos.";
+                    return Page();
+                }
+            }
+
+            // Se a validação falhar, retorna à página de login
+            return Page();
+        }
     }
 }

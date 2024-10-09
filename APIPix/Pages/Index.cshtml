@@ -1,90 +1,129 @@
 ﻿@page
 @model APIPix.Pages.IndexModel
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Login";
+    Layout = null; // Desabilita o layout global
 }
 
-<div class="ml-3">
-    <h3><b>Olá Matheus</b></h3>
-    <h4>Este é o Painel do Cliente.</h4>
-</div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-<!-- Ações Rápidas - Movidas para o topo -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 d-flex justify-content-end mb-4 mt-4">
-            <div>
-                <h5>Ações Rápidas</h5>
-                <a href="@Url.Page("CriarTransacao")" class="btn btn-primary">Criar Nova Transação</a>
-                <a href="@Url.Page("/Relatorios")" class="btn btn-secondary">Ver Relatórios</a>
-            </div>
-        </div>
-    </div>
-</div>
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
 
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
 
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
-<!-- Resumo de Estatísticas -->
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header">Total de Transações</div>
-                <div class="card-body">
-                    <h5 class="card-title">R$ @Model.TotalTransacoes.ToString("N2")</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-header">Saldo Atual</div>
-                <div class="card-body">
-                    <h5 class="card-title">R$ @Model.SaldoAtual.ToString("N2")</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-warning mb-3">
-                <div class="card-header">Clientes Cadastrados</div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model.ClientesCadastrados</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            text-align: left;
+            width: 100%;
+        }
 
-<!-- Dashboard Section -->
-<div id="dashboard" class="container mt-4">
-    <canvas id="myChart" width="400" height="200"></canvas>
-</div>
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
 
-@section Scripts {
-    <script>
-        // Exemplo de gráfico utilizando Chart.js
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar', // Você pode mudar o tipo de gráfico para 'line', 'pie', etc.
-            data: {
-                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
-                datasets: [{
-                    label: 'Vendas',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false, // Para ocupar 100% da largura
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #009c94;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #007f6e;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 200px;
+        }
+
+        @@media (max-width: 768px) {
+            .login-container {
+                padding: 20px;
             }
-        });
-    </script>
-}
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login API Pix</h2>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="error">@Model.ErrorMessage</div>
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label for="Username">Usuário:</label>
+                <input type="text" id="Username" name="Username" value="@Model.Username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Senha:</label>
+                <input type="password" id="Password" name="Password" value="@Model.Password" required>
+            </div>
+
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

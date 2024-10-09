@@ -1,0 +1,9 @@
+﻿@page
+@model APIPix.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2>Bem-vindo ao Dashboard, @User.Identity.Name!</h2>
+
+<a href="@Url.Page("/Logout")" class="btn btn-danger">Sair</a>
