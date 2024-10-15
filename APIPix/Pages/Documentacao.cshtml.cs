@@ -7,6 +7,7 @@ namespace APIPix.Pages
     {
         public void OnGet()
         {
+            // Esta ação não faz nada, mas é necessária para a requisição GET.
         }
     }
 }

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sCycrG90w4M=",
+  "dgSpecHash": "RkWdxXtcJPA=",
   "success": true,
   "projectFilePath": "C:\\Users\\yarap\\source\\repos\\APIPix\\APIPix\\APIPix.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\yarap\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,4 +1,4 @@
-﻿@page "/Relatorios"
+﻿@page
 @model APIPix.Pages.RelatoriosModel
 @{
     ViewData["Title"] = "Histórico de Transações";
@@ -17,19 +17,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="startDate">Data Inicial:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control" />
+                        <input type="date" id="startDate" name="startDate" class="form-control" value="@Model.StartDate?.ToString("yyyy-MM-dd")" />
                     </div>
                     <div class="col-md-4">
                         <label for="endDate">Data Final:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control" />
+                        <input type="date" id="endDate" name="endDate" class="form-control" value="@Model.EndDate?.ToString("yyyy-MM-dd")" />
                     </div>
                     <div class="col-md-4">
                         <label for="status">Status da Transação:</label>
                         <select id="status" name="status" class="form-control">
-                            <option value="todos">Todos</option>
-                            <option value="sucesso">Sucesso</option>
-                            <option value="pendente">Pendente</option>
-                            <option value="falha">Falha</option>
+                            <option value="todos" @@(Model.StatusFilter == "todos" ? "selected" : string.Empty)>Todos</option>
+                            <option value="sucesso" @@(Model.StatusFilter == "sucesso" ? "selected" : string.Empty)>Sucesso</option>
+                            <option value="pendente" @@(Model.StatusFilter == "pendente" ? "selected" : string.Empty)>Pendente</option>
+                            <option value="falha" @@(Model.StatusFilter == "falha" ? "selected" : string.Empty)>Falha</option>
                         </select>
                     </div>
                 </div>
@@ -56,13 +56,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>Data</th>
-                    <th>Valor</th>
-                    <th>Status</th>
-                    <th>Remetente</th>
-                    <th>Destinatário</th>
-                </tr>
+                @if (Model.Transactions.Count > 0)
+                {
+                    foreach (var transaction in Model.Transactions)
+                    {
+                        <tr>
+                            <td>@transaction.Date.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                            <td>R$ @transaction.Amount</td>
+                            <td>@transaction.Status</td>
+                            <td>@transaction.Sender</td>
+                            <td>@transaction.Receiver</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">Nenhuma transação encontrada.</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

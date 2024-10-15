@@ -1,7 +1,21 @@
+using APIPix.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Configurar o HttpClient para a API do Banco Inter
+builder.Services.AddHttpClient<BancoInterService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["BancoInter:ApiBaseUrl"]);
+});
+
+builder.Services.AddScoped<BancoInterService>(); // Adiciona o serviço ao contêiner de injeção de dependência
 
 var app = builder.Build();
 
@@ -9,7 +23,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

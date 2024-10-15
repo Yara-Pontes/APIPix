@@ -1,42 +1,78 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace APIPix.Pages
 {
-    public class RelatoriosModel : PageModel
+    public class Transaction
     {
-        public decimal TotalTransacoes { get; set; }
-        public List<Transacao> TransacoesRecentes { get; set; }
-
-        public void OnGet()
-        {
-            // Total de transações fixo
-            TotalTransacoes = 1000.00m;
-            TransacoesRecentes = GetTransacoes(); // Obter transações fictícias
-        }
-
-        private List<Transacao> GetTransacoes()
-        {
-            // Dados fictícios de transações
-            return new List<Transacao>
-            {
-                /*new Transacao { Data = new DateTime(2024, 1, 1), Valor = 100.00m, Status = "Concluída", Remetente = "Cliente A", Destinatario = "Cliente B" },
-                new Transacao { Data = new DateTime(2024, 1, 2), Valor = 200.00m, Status = "Pendente", Remetente = "Cliente C", Destinatario = "Cliente D" },
-                new Transacao { Data = new DateTime(2024, 1, 3), Valor = 150.00m, Status = "Concluída", Remetente = "Cliente E", Destinatario = "Cliente F" },
-                new Transacao { Data = new DateTime(2024, 1, 4), Valor = 300.00m, Status = "Cancelada", Remetente = "Cliente G", Destinatario = "Cliente H" },
-                new Transacao { Data = new DateTime(2024, 1, 5), Valor = 250.00m, Status = "Concluída", Remetente = "Cliente I", Destinatario = "Cliente J" }*/
-            };
-        }
+        public DateTime Date { get; set; }
+        public decimal Amount { get; set; }
+        public string Status { get; set; }
+        public string Sender { get; set; }
+        public string Receiver { get; set; }
     }
 
-    /*public class Transacao
+    public class RelatoriosModel : PageModel
     {
-        public DateTime Data { get; set; }
-        public decimal Valor { get; set; }
-        public string Status { get; set; }
-        public string Remetente { get; set; }
-        public string Destinatario { get; set; }
-    }*/
+        // Propriedades para armazenar as transações e os filtros
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string StatusFilter { get; set; }
+
+        public void OnGet(DateTime? startDate, DateTime? endDate, string status)
+        {
+            // Armazenar os parâmetros do filtro
+            StartDate = startDate;
+            EndDate = endDate;
+            StatusFilter = status;
+
+            // Aqui você deve obter as transações de uma fonte de dados real (banco de dados, etc.)
+            // Para fins de exemplo, vamos adicionar alguns dados fictícios:
+            Transactions.Add(new Transaction
+            {
+                Date = DateTime.Now.AddDays(-1),
+                Amount = 150.00m,
+                Status = "Sucesso",
+                Sender = "Usuario1",
+                Receiver = "Usuario2"
+            });
+
+            Transactions.Add(new Transaction
+            {
+                Date = DateTime.Now.AddDays(-2),
+                Amount = 75.00m,
+                Status = "Pendente",
+                Sender = "Usuario3",
+                Receiver = "Usuario4"
+            });
+
+            Transactions.Add(new Transaction
+            {
+                Date = DateTime.Now.AddDays(-3),
+                Amount = 200.00m,
+                Status = "Falha",
+                Sender = "Usuario5",
+                Receiver = "Usuario6"
+            });
+
+            // Filtrar as transações com base nos parâmetros
+            if (startDate.HasValue)
+            {
+                Transactions = Transactions.Where(t => t.Date >= startDate.Value).ToList();
+            }
+
+            if (endDate.HasValue)
+            {
+                Transactions = Transactions.Where(t => t.Date <= endDate.Value).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(status) && status != "todos")
+            {
+                Transactions = Transactions.Where(t => t.Status.Equals(status, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+        }
+    }
 }

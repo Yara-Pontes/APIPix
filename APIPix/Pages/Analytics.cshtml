@@ -1,40 +1,36 @@
 ﻿@page
 @model APIPix.Pages.AnalyticsModel
 @{
-    ViewData["Title"] = "Analytics";
+    ViewData["Title"] = "Análise de Transações";
 }
 
-<h2 class="ml-5 p-2">Analytics</h2>
-
-<!-- Exibindo dados fictícios -->
 <div class="container mt-4">
-    <h4>Total de Transações: 5000</h4>
-    <h4>Valor Total Movimentado: R$ </h4>
-    <h4>Total de Transações com Sucesso: </h4>
+    <h2>Análise de Transações</h2>
 
-    <h5>Distribuição de Transações por Faixa de Valor</h5>
-    <ul>
-        <li>0 a R$ 500: </li>
-        <li>R$ 500 a R$ 1000: </li>
-        <li>R$ 1000 a R$ 5000: </li>
-        <li>Acima de R$ 5000:</li>
-    </ul>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
 
-    <h5>Erros por Endpoint</h5>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Endpoint</th>
-                <th>Quantidade de Erros</th>
-                <th>Erro Mais Comum</th>
+                <th>Transações</th>
+                <th>Erros</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Endpoint</td>
-                <td>QuantidadeErros</td>
-                <td>ErroMaisComum</td>
-            </tr>
+            @foreach (var item in Model.AnalyticsData)
+            {
+                <tr>
+                    <td>@item.Endpoint</td>
+                    <td>@item.Transacoes</td>
+                    <td>@item.Erros</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

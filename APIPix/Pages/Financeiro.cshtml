@@ -6,13 +6,10 @@
 
 <div class="container mt-4">
     <div class="row">
-        <!-- Títulos Financeiro e Resumo Financeiro Alinhados à Esquerda -->
         <div class="col-md-6">
             <h2>Financeiro</h2>
             <h4>Resumo Financeiro</h4>
         </div>
-
-        <!-- Ações Rápidas Alinhadas à Direita -->
         <div class="col-md-6 text-right">
             <div class="mb-4">
                 <a href="@Url.Page("AdicionarReceita")" class="btn btn-primary">Adicionar Receita</a>
@@ -21,7 +18,6 @@
         </div>
     </div>
 
-    <!-- Resumo Financeiro Cards -->
     <div class="row mt-4">
         <div class="col-md-4">
             <div class="card text-white bg-primary mb-3">
@@ -49,7 +45,6 @@
         </div>
     </div>
 
-    <!-- Gráfico Financeiro -->
     <div id="financeChart" class="mt-4">
         <canvas id="myFinanceChart" width="400" height="200"></canvas>
     </div>
@@ -58,10 +53,9 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Exemplo de gráfico utilizando Chart.js
         var ctx = document.getElementById('myFinanceChart').getContext('2d');
         var myChart = new Chart(ctx, {
-            type: 'line', // Tipo de gráfico
+            type: 'line',
             data: {
                 labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
                 datasets: [{

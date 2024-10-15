@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
 
 namespace APIPix.Pages
 {
@@ -9,14 +7,14 @@ namespace APIPix.Pages
         public decimal SaldoAtual { get; set; }
         public decimal ReceitasTotais { get; set; }
         public decimal DespesasTotais { get; set; }
-        public List<Transacao> Transacoes { get; set; }
 
         public void OnGet()
         {
-            // Exemplo de dados fictícios
-            SaldoAtual = 2500.00m;
-            ReceitasTotais = 5000.00m;
-            DespesasTotais = 2500.00m;
+            // Aqui você vai implementar a lógica para obter os dados do banco de dados.
+            // Exemplo:
+            SaldoAtual = 1000.00m; // Substitua pelo valor do banco de dados
+            ReceitasTotais = 5000.00m; // Substitua pelo valor do banco de dados
+            DespesasTotais = 4000.00m; // Substitua pelo valor do banco de dados
         }
     }
 }

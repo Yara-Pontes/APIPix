@@ -1,5 +1,4 @@
-﻿@* _Layout.cshtml *@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
@@ -42,7 +41,6 @@
             color: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
-            padding: 10px 20px;
             transition: padding 0.3s;
         }
 
@@ -134,20 +132,20 @@
         /* Responsiveness */
         @@media (max-width: 768px) {
             .sidebar {
-                left: -250px; 
+                left: -250px;
             }
 
             .sidebar.active {
-                left: 0; 
+                left: 0;
             }
 
             .header {
-                left: 0; 
-                width: 100%; 
+                left: 0;
+                width: 100%;
             }
 
             .content {
-                margin-left: 0; 
+                margin-left: 0;
                 width: 100%;
                 margin-top: 60px;
             }
@@ -184,14 +182,19 @@
             border-radius: 0.25rem; /* Bordas arredondadas */
         }
 
-        .dropdown-item:hover {
-            background-color: #f8f9fa; /* Cor de fundo ao passar o mouse */
+        .user-dropdown {
+            display: flex;
+            align-items: center; /* Alinha o ícone e o texto verticalmente */
+        }
+
+        .user-dropdown i {
+            margin-right: 8px; /* Espaço entre o ícone e o texto */
         }
     </style>
 </head>
 <body>
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar collapsed" id="sidebar">
         <nav class="navbar navbar-dark mt-5">
             <ul class="navbar-nav flex-column">
                 <li class="nav-item">
@@ -247,28 +250,34 @@
     </div>
 
     <!-- Header -->
-    <header class="header" id="header">
+    <header class="header collapsed" id="header">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="user-info d-flex align-items-center">
-                <span class="balance">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle user-dropdown d-flex align-items-center" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle-o fa-2x mr-2"></i>
+                        <strong>Yara Ramos Pontes</strong>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="@Url.Page("/Perfil")">Perfil</a>
+                        <a class="dropdown-item" href="@Url.Page("/Logout")">Sair</a>
+                    </div>
+                </div>
+                <span class="balance ml-3">
                     <strong>Saldo:</strong> R$ <span id="accountBalance">0,00</span>
                 </span>
             </div>
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle d-flex align-items-center" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user-circle-o fa-2x"></i>
-                    <span class="ml-2 d-none d-md-inline">@User.Identity.Name</span>
+            <div class="d-flex align-items-center">
+                <a class="btn logout-button ml-3" href="@Url.Page("/Index")">
+                    <i class="fa fa-sign-out fa-lg"></i> Logout
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="@Url.Action("Profile", "Account")">Perfil</a>
-                    <a class="dropdown-item" href="@Url.Action("Logout", "Account")">Logout</a>
-                </div>
             </div>
         </div>
     </header>
 
+
     <!-- Main Content -->
-    <main role="main" class="content" id="content">
+    <main role="main" class="content collapsed" id="content">
         @RenderBody()
     </main>
 
@@ -279,14 +288,14 @@
     @RenderSection("Scripts", required: false)
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const sidebar = document.getElementById('sidebar');
             const content = document.getElementById('content');
             const header = document.getElementById('header');
             const toggleButton = document.getElementById('toggleButton');
             const icon = toggleButton.querySelector('i');
 
-            toggleButton.addEventListener('click', function() {
+            toggleButton.addEventListener('click', function () {
                 sidebar.classList.toggle('collapsed');
                 content.classList.toggle('collapsed');
                 header.classList.toggle('collapsed');
@@ -296,7 +305,7 @@
             function updateIcon() {
                 if (sidebar.classList.contains('collapsed')) {
                     icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-chevron-right'); // Usando um ícone diferente
+                    icon.classList.add('fa-chevron-right');
                 } else {
                     icon.classList.remove('fa-chevron-right');
                     icon.classList.add('fa-bars');

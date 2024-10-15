@@ -19,13 +19,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>DataHora</td>
-                <td>R$ Valor</td>
-                <td>Status</td>
-                <td>Remetente</td>
-                <td>Destinatario</td>
-            </tr>
+            @foreach (var transaction in Model.RecentTransactions)
+            {
+                <tr>
+                    <td>@transaction.DateTime</td>
+                    <td>R$ @transaction.Amount</td>
+                    <td>@transaction.Status</td>
+                    <td>@transaction.Sender</td>
+                    <td>@transaction.Receiver</td>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -39,11 +42,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>DataHora</td>
-                <td>Codigo</td>
-                <td>Mensagem</td>
-            </tr>
+            @foreach (var error in Model.RecentErrors)
+            {
+                <tr>
+                    <td>@error.DateTime</td>
+                    <td>@error.ErrorCode</td>
+                    <td>@error.Message</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
